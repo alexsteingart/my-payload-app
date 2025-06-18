@@ -49,7 +49,7 @@ export const ProductCard: React.FC<{
       <div className="relative w-full ">
         {!bottleImage && <div className="">No image</div>}
         {bottleImage && typeof bottleImage !== 'string' && (
-          <Media resource={bottleImage} imgClassName="m-auto" />
+          <Media resource={bottleImage.sizes.square} imgClassName="m-auto" />
         )}
       </div>
       <div className="p-2 text-center">
@@ -83,7 +83,7 @@ export const ProductCard: React.FC<{
               .map((review, index) => {
                 return (
                   <span key={index}>
-                    {index > 0 && ' '}[{review.sourceAbbr} | {review.score}]
+                    {index > 0 && ' '}[{review.sourceAbbr}|{review.score}]
                   </span>
                 )
               })}

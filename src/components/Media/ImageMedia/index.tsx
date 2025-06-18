@@ -70,7 +70,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
         loading={loading}
         sizes={sizes}
         src={src}
-        width={200}
+        width={!fill ? width : undefined}
       />
     </picture>
   )
