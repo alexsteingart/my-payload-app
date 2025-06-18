@@ -75,6 +75,13 @@ export const Media: CollectionConfig = {
         height: 630,
         crop: 'center',
       },
+      {
+        name: 'productCard',
+        width: 300,
+        height: 400,
+        position: 'center',
+        fit: 'contain',
+      },
     ],
   },
 }

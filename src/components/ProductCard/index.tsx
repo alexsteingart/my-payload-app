@@ -49,7 +49,7 @@ export const ProductCard: React.FC<{
       <div className="relative w-full ">
         {!bottleImage && <div className="">No image</div>}
         {bottleImage && typeof bottleImage !== 'string' && (
-          <Media resource={bottleImage.sizes.square} imgClassName="m-auto" />
+          <Media resource={bottleImage.sizes.productCard} imgClassName="m-auto" />
         )}
       </div>
       <div className="p-2 text-center">
