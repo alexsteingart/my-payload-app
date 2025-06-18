@@ -22,8 +22,12 @@ export default async function Page() {
     select: {
       title: true,
       slug: true,
-      description: true,
       bottleImage: true,
+      producer: true,
+      country: true,
+      region: true,
+      subregion: true,
+      reviews: true,
     },
   })
 

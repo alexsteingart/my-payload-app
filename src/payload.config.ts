@@ -14,6 +14,11 @@ import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
 import { Products } from './collections/Products'
 import { ProductTypes } from './collections/ProductTypes'
+import { Producers } from './collections/Producers'
+import { Countries } from './collections/Countries'
+import { Regions } from './collections/Regions'
+import { Subregions } from './collections/Subregions'
+import { Reviews } from './collections/Reviews'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
@@ -78,7 +83,20 @@ export default buildConfig({
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
   db: databaseAdapter(databaseParameters),
-  collections: [Pages, Posts, Media, Categories, Users, Products, ProductTypes],
+  collections: [
+    Pages,
+    Posts,
+    Media,
+    Categories,
+    Users,
+    Products,
+    ProductTypes,
+    Producers,
+    Countries,
+    Regions,
+    Subregions,
+    Reviews,
+  ],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [

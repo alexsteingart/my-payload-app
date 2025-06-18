@@ -7,10 +7,19 @@ import React from 'react'
 import type { Product } from '@/payload-types'
 
 import { Media } from '@/components/Media'
+import { Button } from '@/components/ui/button'
 
 export type CardProductData = Pick<
   Product,
-  'slug' | 'productType' | 'title' | 'description' | 'bottleImage'
+  | 'slug'
+  | 'productType'
+  | 'title'
+  | 'bottleImage'
+  | 'producer'
+  | 'country'
+  | 'region'
+  | 'subregion'
+  | 'reviews'
 >
 
 export const ProductCard: React.FC<{
@@ -24,10 +33,9 @@ export const ProductCard: React.FC<{
   const { card, link } = useClickableCard({})
   const { className, doc, relationTo } = props
 
-  const { slug, title, description, bottleImage } = doc || {}
+  const { slug, title, bottleImage, producer, country, region, subregion, reviews } = doc || {}
   //const { description, image: metaImage } = meta || {}
 
-  const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
   const href = `/${relationTo}/${slug}`
 
   return (
@@ -44,17 +52,53 @@ export const ProductCard: React.FC<{
           <Media resource={bottleImage} imgClassName="m-auto" />
         )}
       </div>
-      <div className="p-4 text-center">
+      <div className="p-2 text-center">
         {title && (
           <div className="prose">
-            <h3>
+            <h4>
               <Link className="not-prose" href={href} ref={link.ref}>
                 {title}
               </Link>
-            </h3>
+            </h4>
           </div>
         )}
-        {description && <div className="mt-2">{description && <p>{sanitizedDescription}</p>}</div>}
+        <div className="text-sm">
+          {producer && <div className="mt-1">{producer.name}</div>}
+          <div className="">
+            {country && <span>{country.name}</span>}
+            {region && <span> &gt; {region.name}</span>}
+            {subregion && <span> &gt; {subregion.name}</span>}
+          </div>
+          <div>
+            {(reviews || [])
+              .sort((a, b) => {
+                if (a.sourceAbbr < b.sourceAbbr) {
+                  return -1
+                }
+                if (a.sourceAbbr > b.sourceAbbr) {
+                  return 1
+                }
+                return 0
+              })
+              .map((review, index) => {
+                return (
+                  <span key={index}>
+                    {index > 0 && ' '}[{review.sourceAbbr} | {review.score}]
+                  </span>
+                )
+              })}
+          </div>
+          <div className="mt-1">
+            <Button asChild size="sm" variant="outline">
+              <Link
+                href={`https://www.wine-searcher.com/find/${(producer && producer.name) || ''} ${title}`}
+                target="_blank"
+              >
+                Find at Retail
+              </Link>
+            </Button>
+          </div>
+        </div>
       </div>
     </article>
   )

@@ -74,6 +74,11 @@ export interface Config {
     users: User;
     products: Product;
     productTypes: ProductType;
+    producers: Producer;
+    countries: Country;
+    regions: Region;
+    subregions: Subregion;
+    reviews: Review;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -92,6 +97,11 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
     productTypes: ProductTypesSelect<false> | ProductTypesSelect<true>;
+    producers: ProducersSelect<false> | ProducersSelect<true>;
+    countries: CountriesSelect<false> | CountriesSelect<true>;
+    regions: RegionsSelect<false> | RegionsSelect<true>;
+    subregions: SubregionsSelect<false> | SubregionsSelect<true>;
+    reviews: ReviewsSelect<false> | ReviewsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -740,6 +750,11 @@ export interface Product {
   title: string;
   description?: string | null;
   productType: number | ProductType;
+  producer: number | Producer;
+  country: number | Country;
+  region?: (number | null) | Region;
+  subregion?: (number | null) | Subregion;
+  reviews?: (number | Review)[] | null;
   bottleImage?: (number | null) | Media;
   publishedAt?: string | null;
   authors?: (number | User)[] | null;
@@ -762,6 +777,69 @@ export interface Product {
 export interface ProductType {
   id: number;
   title: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "producers".
+ */
+export interface Producer {
+  id: number;
+  name: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "countries".
+ */
+export interface Country {
+  id: number;
+  name: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "regions".
+ */
+export interface Region {
+  id: number;
+  name: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subregions".
+ */
+export interface Subregion {
+  id: number;
+  name: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews".
+ */
+export interface Review {
+  id: number;
+  source: string;
+  sourceAbbr: string;
+  score: number;
+  reviewText?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -956,6 +1034,26 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'productTypes';
         value: number | ProductType;
+      } | null)
+    | ({
+        relationTo: 'producers';
+        value: number | Producer;
+      } | null)
+    | ({
+        relationTo: 'countries';
+        value: number | Country;
+      } | null)
+    | ({
+        relationTo: 'regions';
+        value: number | Region;
+      } | null)
+    | ({
+        relationTo: 'subregions';
+        value: number | Subregion;
+      } | null)
+    | ({
+        relationTo: 'reviews';
+        value: number | Review;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1322,6 +1420,11 @@ export interface ProductsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   productType?: T;
+  producer?: T;
+  country?: T;
+  region?: T;
+  subregion?: T;
+  reviews?: T;
   bottleImage?: T;
   publishedAt?: T;
   authors?: T;
@@ -1343,6 +1446,64 @@ export interface ProductsSelect<T extends boolean = true> {
  */
 export interface ProductTypesSelect<T extends boolean = true> {
   title?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "producers_select".
+ */
+export interface ProducersSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "countries_select".
+ */
+export interface CountriesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "regions_select".
+ */
+export interface RegionsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subregions_select".
+ */
+export interface SubregionsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews_select".
+ */
+export interface ReviewsSelect<T extends boolean = true> {
+  source?: T;
+  sourceAbbr?: T;
+  score?: T;
+  reviewText?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;

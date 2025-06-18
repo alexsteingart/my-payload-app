@@ -33,6 +33,34 @@ export const Products: CollectionConfig = {
       required: true,
     },
     {
+      name: 'producer',
+      type: 'relationship',
+      relationTo: 'producers',
+      required: true,
+    },
+    {
+      name: 'country',
+      type: 'relationship',
+      relationTo: 'countries',
+      required: true,
+    },
+    {
+      name: 'region',
+      type: 'relationship',
+      relationTo: 'regions',
+    },
+    {
+      name: 'subregion',
+      type: 'relationship',
+      relationTo: 'subregions',
+    },
+    {
+      name: 'reviews',
+      type: 'relationship',
+      relationTo: 'reviews',
+      hasMany: true,
+    },
+    {
       name: 'bottleImage',
       type: 'upload',
       relationTo: 'media',
