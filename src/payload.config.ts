@@ -40,8 +40,8 @@ export default buildConfig({
     autoLogin:
       process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN === 'true'
         ? {
-            email: 'test@example.com',
-            password: 'test',
+            email: 'alex@bevhub.ai',
+            password: 'password',
             prefillOnly: true,
           }
         : false,
