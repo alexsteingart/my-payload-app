@@ -12,7 +12,7 @@ import { Search } from '@/search/Component'
 
 interface HeaderClientProps {
   data: Header
-  productTypes: ProductType
+  productTypes: [ProductType]
 }
 
 export const HeaderClient: React.FC<HeaderClientProps> = ({ data, productTypes }) => {
@@ -49,9 +49,11 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, productTypes }
             </div>
           </div>
           <div className="flex mt-6">
-            {productTypes.map((productType) => {
-              return { productType }
-            })}
+            [{' '}
+            {productTypes.docs.map((productType, index) => {
+              return `${index > 0 ? ' | ' : ''}${productType.title}`
+            })}{' '}
+            ]
           </div>
         </div>
       </div>

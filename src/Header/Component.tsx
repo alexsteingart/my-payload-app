@@ -10,7 +10,7 @@ export async function Header() {
   const headerData: Header = await getCachedGlobal('header', 1)()
 
   const payload = await getPayload({ config: configPromise })
-  const productTypes: [ProductType] = await payload.find({
+  const productTypes = await payload.find({
     collection: 'productTypes',
     depth: 1,
     limit: 20,
@@ -18,6 +18,7 @@ export async function Header() {
       title: true,
       slug: true,
     },
+    sort: 'title',
   })
 
   return <HeaderClient data={headerData} productTypes={productTypes} />
