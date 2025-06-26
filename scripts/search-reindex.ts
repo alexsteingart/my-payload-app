@@ -8,7 +8,7 @@ const reindex = async () => {
   const products = await payload.find({
     collection: 'products',
     limit: 1000,
-    depth: 0,
+    depth: 1,
     sort: 'createdAt',
   })
 
@@ -20,6 +20,11 @@ const reindex = async () => {
       objects: products.docs.map((product) => ({
         objectID: product.id,
         ...product,
+        productType: product.productType.title,
+        producer: product.producer?.name,
+        country: product.country?.name,
+        region: product.region?.name,
+        subregion: product.subregion?.name,
       })),
     })
   }
