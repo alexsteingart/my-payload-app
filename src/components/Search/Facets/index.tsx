@@ -39,22 +39,24 @@ export const SearchFacets: React.FC<Props> = (props) => {
       {Object.keys(facets).map((facetName) => {
         const facetValues = facets[facetName]
         return (
-          <div key={facetName}>
-            <h3>{facetName}</h3>
-            <ul>
-              {Object.keys(facetValues)
-                .sort((valueA, valueB) => facetValues[valueB] - facetValues[valueA])
-                .map((value) => {
-                  const count = facetValues[value]
-                  return (
-                    <li key={value}>
-                      <a href="#" onClick={(e) => addFilter(facetName, value, e)}>
-                        {value} ({count})
-                      </a>
-                    </li>
-                  )
-                })}
-            </ul>
+          <div key={facetName} className="card card-border">
+            <div className="card-body p-3">
+              <h3 className="card-title">{facetName}</h3>
+              <ul>
+                {Object.keys(facetValues)
+                  .sort((valueA, valueB) => facetValues[valueB] - facetValues[valueA])
+                  .map((value) => {
+                    const count = facetValues[value]
+                    return (
+                      <li key={value}>
+                        <a href="#" onClick={(e) => addFilter(facetName, value, e)}>
+                          {value} ({count})
+                        </a>
+                      </li>
+                    )
+                  })}
+              </ul>
+            </div>
           </div>
         )
       })}
