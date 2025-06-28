@@ -8,6 +8,9 @@ import type { Product } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 import { Button } from '@/components/ui/button'
+import { Reviews } from '@/collections/Reviews'
+
+import { ProductCardReviews } from '@/components/ProductCard/reviews'
 
 export type CardProductData = Pick<
   Product,
@@ -69,25 +72,7 @@ export const ProductCard: React.FC<{
             {region && <span> &gt; {region.name}</span>}
             {subregion && <span> &gt; {subregion.name}</span>}
           </div>
-          <div>
-            {(reviews || [])
-              .sort((a, b) => {
-                if (a.sourceAbbr < b.sourceAbbr) {
-                  return -1
-                }
-                if (a.sourceAbbr > b.sourceAbbr) {
-                  return 1
-                }
-                return 0
-              })
-              .map((review, index) => {
-                return (
-                  <span key={index}>
-                    {index > 0 && ' '}[{review.sourceAbbr}|{review.score}]
-                  </span>
-                )
-              })}
-          </div>
+          <ProductCardReviews reviews={reviews} />
           <div className="mt-1">
             <Button asChild size="sm" variant="outline">
               <Link

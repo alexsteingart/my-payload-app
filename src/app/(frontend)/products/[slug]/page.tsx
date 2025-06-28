@@ -12,6 +12,8 @@ import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { Media } from '@/components/Media'
+import { ProductCardReviews } from '@/components/ProductCard/reviews'
+import { ProductCard } from '@/components/ProductCard'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -56,12 +58,36 @@ export default async function Product({ params: paramsPromise }: Args) {
 
       {draft && <LivePreviewListener />}
 
-      <Media resource={product.bottleImage} size="33vw" />
-
-      <div className="flex flex-col items-center gap-4 pt-8">
-        <div className="container">
-          <p className="max-w-[48rem] mx-auto">{product.description}</p>
+      <div className="flex flex-row gap-4">
+        <div className="basis-1/3">
+          <Media resource={product.bottleImage} size="33vw" />
         </div>
+        <div className="basis-2/3">
+          <h3>{product.producer?.name}</h3>
+          <h1>{product.title}</h1>
+          <p>{product.productType?.title}</p>
+          <p>
+            {product.country?.name}
+            {product.region ? ` > ${product.region.name}` : ''}
+            {product.subregion ? ` > ${product.subregion.name}` : ''}
+          </p>
+          <p>
+            <ProductCardReviews reviews={product.reviews} />
+          </p>
+          {product.description}
+        </div>
+      </div>
+      <div>
+        Other {product.productType.title} from this Producer
+        {product.producer?.products?.map((product) => (
+          <ProductCard
+            key={product.id}
+            className="h-full"
+            doc={product}
+            relationTo="products"
+            showCategories
+          />
+        ))}
       </div>
     </article>
   )

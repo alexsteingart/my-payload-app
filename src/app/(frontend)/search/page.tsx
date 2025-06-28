@@ -8,15 +8,13 @@ import PageClient from './page.client'
 import { CardProductData } from '@/components/ProductCard'
 import { algoliasearch } from 'algoliasearch'
 import { SearchFacets } from '@/components/Search/Facets'
+import { SearchAppliedFilters } from '@/components/Search/AppliedFilters'
 
 type Args = {
   searchParams: Promise<{
     q: string
+    filters: string
   }>
-}
-
-function addFilter(key: string, value: string) {
-  return `${key}=${value}`
 }
 
 export default async function Page({ searchParams: searchParamsPromise }: Args) {
@@ -56,6 +54,7 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
       <PageClient />
       <div className="flex flex-row">
         <div className="basis-1/8">
+          <SearchAppliedFilters />
           <SearchFacets facets={response.facets} />
         </div>
         <div className="basis-7/8">

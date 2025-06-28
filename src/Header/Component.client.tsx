@@ -1,7 +1,7 @@
 'use client'
 import { useHeaderTheme } from '@/providers/HeaderTheme'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { useSearchParams, usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 import type { Header, ProductType } from '@/payload-types'
@@ -20,6 +20,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, productTypes }
   const [theme, setTheme] = useState<string | null>(null)
   const { headerTheme, setHeaderTheme } = useHeaderTheme()
   const pathname = usePathname()
+  const searchParams = useSearchParams()
 
   useEffect(() => {
     setHeaderTheme(null)
@@ -51,7 +52,18 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, productTypes }
           <div className="flex mt-6">
             [{' '}
             {productTypes.docs.map((productType, index) => {
-              return `${index > 0 ? ' | ' : ''}${productType.title}`
+              console.log(searchParams.get('filters')?.indexOf(productType.title))
+              return (
+                <span key={productType.id}>
+                  {index > 0 ? ` | ` : ''}
+                  <Link
+                    key={productType.id}
+                    href={`/search?filters=productType:'${productType.title}'`}
+                  >
+                    {productType.title}
+                  </Link>
+                </span>
+              )
             })}{' '}
             ]
           </div>
