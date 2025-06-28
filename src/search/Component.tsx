@@ -11,15 +11,12 @@ export const Search: React.FC = () => {
 
   const debouncedValue = useDebounce(value)
 
-  useEffect(() => {
-    router.push(`/search${debouncedValue ? `?q=${debouncedValue}` : ''}`)
-  }, [debouncedValue, router])
-
   return (
     <div>
       <form
         onSubmit={(e) => {
           e.preventDefault()
+          router.push(`/search${debouncedValue ? `?q=${debouncedValue}` : ''}`)
         }}
       >
         <Label htmlFor="search" className="sr-only">

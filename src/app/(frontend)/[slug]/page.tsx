@@ -15,6 +15,22 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
+
+  const productTypes = await payload.find({
+    collection: 'productTypes',
+    draft: false,
+    limit: 1000,
+    overrideAccess: false,
+    pagination: false,
+    select: {
+      slug: true,
+    },
+  })
+
+  const productTypeSlugs = productTypes.docs?.map(({ slug }) => {
+    return { slug }
+  })
+
   const pages = await payload.find({
     collection: 'pages',
     draft: false,
@@ -26,7 +42,7 @@ export async function generateStaticParams() {
     },
   })
 
-  const params = pages.docs
+  const pageSlugs = pages.docs
     ?.filter((doc) => {
       return doc.slug !== 'home'
     })
@@ -34,7 +50,7 @@ export async function generateStaticParams() {
       return { slug }
     })
 
-  return params
+  return productTypeSlugs.concat(pageSlugs)
 }
 
 type Args = {
